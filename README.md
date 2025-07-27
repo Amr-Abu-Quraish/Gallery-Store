@@ -9,6 +9,8 @@ It fetches products from Fake Store API and allows searching, sorting, and viewi
 ## 🧱 Tech Stack Used
 - Angular 19
 - Tailwind CSS
+- SASS
+- Flowbite
 - Fake Store API
 
 
