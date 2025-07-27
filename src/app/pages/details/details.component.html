@@ -1,0 +1,92 @@
+@if( detailsProduct){
+<section class="px-16 pt-24 pb-28 bg-neutral-100 dark:bg-slate-800">
+  <h2 class="my-10 font-serif text-4xl font-bold text-center main-color">
+    Product Details
+  </h2>
+
+  <div class="grid gap-1 mb-10 grid-cols-1 md:grid-cols-[30%_70%]">
+    <div class="flex justify-center items-center">
+      <div class="w-full max-w-[300px]">
+        <img
+          [src]="detailsProduct.image"
+          class="w-full h-auto"
+          [alt]="detailsProduct.title"
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <h2
+        class="caption text-black dark:text-white font-mono mb-4 font-semibold text-xl md:text-3xl"
+      >
+        {{ detailsProduct.title.split(" ", 2).join(" ") }}
+      </h2>
+
+      <p
+        class="text-emerald-950 dark:text-slate-50 text-lg md:text-xl font-medium mb-3"
+      >
+        {{ detailsProduct.category }}
+      </p>
+      <p
+        class="text-emerald-950 dark:text-gray-200 text-lg md:text-xl font-medium mb-3"
+      >
+        {{ detailsProduct.description }}
+      </p>
+
+      <span class="dark:text-white font-semibold">
+        <span
+          class="text-amber-700 dark:text-slate-50 font-mono my-1 font-semibold text-lg"
+        >
+          {{ detailsProduct.price }}
+        </span>
+        EGP
+      </span>
+
+      <div class="flex gap-2">
+        <span
+          class="text-blue-950 dark:text-gray-200 font-mono font-semibold text-lg"
+          >Available Count:</span
+        >
+        <span class="text-amber-900 dark:text-amber-700 font-bold">
+          {{ detailsProduct.rating.count }}</span
+        >
+      </div>
+
+      <div class="item-center dark:text-white mt-1 flex items-center">
+        <span class="mr-1">{{ detailsProduct.rating.rate }}</span>
+
+        @for (star of getFullStars(detailsProduct.rating.rate); track star) {
+        <i class="fas fa-star text-yellow-400"></i>
+        } @if (getHasHalfStar(detailsProduct.rating.rate)) {
+        <i class="fas fa-star-half-alt text-yellow-400"></i>
+        }
+      </div>
+
+      <button
+        (click)="addToCart(detailsProduct.id)"
+        [disabled]="isAddLoading[detailsProduct.id]"
+        class="font-bold font-mono bg-main text-white text-3xl mt-10 py-2 px-4 border block w-[60%] md:w-[40%] rounded-md"
+      >
+        @if (!isAddLoading[detailsProduct.id]) {
+        <i class="fa-solid fa-cart-plus"></i>
+        } @else {
+        <i class="fas fa-spinner fa-spin"></i>
+        }
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="fixed right-2 bottom-5 w-10 h-10 cursor-pointer text-center text-3xl"
+  >
+    <i
+      class="fa-solid cursor-pointer"
+      [class.fa-sun]="isDarkMode"
+      [class.fa-moon]="!isDarkMode"
+      [class.text-white]="isDarkMode"
+      (click)="toggleTheme()"
+    ></i>
+  </div>
+</section>
+
+}

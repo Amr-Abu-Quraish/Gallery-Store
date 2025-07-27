@@ -1,0 +1,194 @@
+<section
+  class="relative h-screen bg-[url('/images/unsplash_5gkYsrH_ebY.png')] bg-cover bg-center"
+>
+  <div class="absolute inset-0 bg-black/50">
+    <div class="absolute top-60 left-20 md:top-60 md:left-64">
+      <h2 class="text-white capitalize md:text-6xl mb-2 font-bold">
+        Upgrade your Style
+      </h2>
+      <p class="text-white mt-3 py-1 md:py-3 ms-5 md:text-2xl font-medium">
+        up to 50% off on all
+      </p>
+      <p class="text-white py-1 md:py-3 ms-5 md:text-2xl font-medium">
+        clothing and accessories
+      </p>
+      <div class="button-container relative left-[-60px]">
+        <button
+          class="text-white text-lg font-bold rounded-3xl mt-5 cursor-pointer bg-main py-3 px-10 md:px-24"
+        >
+          Shop Now
+        </button>
+        <div class="arrow">
+          <img
+            src="/images/right-down.png"
+            class="w-24 md:w-32 relative left-9 md:left-52"
+            alt=""
+          />
+        </div>
+
+        <div class="content absolute left-36 md:left-[360px] top-36">
+          <div class="flex items-center">
+            <span class="font-bold text-lg text-white">4.8 |</span>
+            <div class="flex">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star fa-star-half-alt text-yellow-400"></i>
+            </div>
+          </div>
+          <h4 class="font-serif text-white font-semibold text-xl text-nowrap">
+            <span class="font-mono text-xl"> 150k</span> Total Review
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  class="md:container px-5 md:p-[70px] pt-48 relative bg-neutral-100 dark:bg-slate-800"
+>
+  <div class="title text-center flex items-center justify-around mb-8">
+    <h4 class="text-4xl font-serif font-semibold main-color py-3">Products</h4>
+    <div class="relative inline-block">
+      <button
+        (click)="showSortMenu = !showSortMenu"
+        class="text-xl font-bold font-serif flex gap-2 bg-section px-3 py-2 rounded-md border-2 shadow-sm shadow-black text-blue-950"
+      >
+        <i class="fa-solid fa-arrow-down-wide-short"></i>
+        <span>Sort By</span>
+      </button>
+
+      @if (showSortMenu) {
+      <div
+        class="absolute left-0 top-full mt-1 w-40 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-10"
+      >
+        <button
+          (click)="sortProducts('high'); showSortMenu = false"
+          class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        >
+          High to Low
+        </button>
+        <button
+          (click)="sortProducts('low'); showSortMenu = false"
+          class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        >
+          Low to High
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="flex justify-center my-16">
+    <input
+      [(ngModel)]="text"
+      type="search"
+      placeholder="Search By Name..."
+      class="p-2 rounded-md shadow-sm shadow-black w-[700px]"
+    />
+  </div>
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-3"
+  >
+    @for (prod of products | search : text ; track prod.id) {
+    <div
+      class="bg-white shadow-lg rounded-3xl overflow-hidden w-80 p-5 relative border border-gray-200"
+    >
+      <div class="relative">
+        <img
+          [src]="prod.image"
+          alt="Product Image"
+          class="w-full h-[320px] object-cover rounded-lg"
+        />
+        <span
+          class="absolute top-72 left-0 bg-second text-black text-lg font-bold px-4 py-1 rounded"
+          >-50%</span
+        >
+      </div>
+
+      <div class="card-body px-2 py-4">
+        <h3 class="text-blue-950 font-mono text-lg">
+          {{ prod.title.split(" ", 2).join(" ") }}
+        </h3>
+
+        <h3 class="main-color font-bold font-mono text-lg">
+          {{ prod.category }}
+        </h3>
+
+        <div class="flex items-center justify-between">
+          <div>
+            <span
+              ><span class="text-blue-950 font-mono font-semibold text-lg">{{
+                prod.price
+              }}</span>
+              <span class="dark:text-black main-color font-bold">
+                EGP</span
+              ></span
+            >
+
+            <div class="flex gap-2">
+              <span class="text-blue-950 font-mono font-semibold text-lg"
+                >Available Count:</span
+              >
+              <span class="dark:text-black main-color font-bold">
+                {{ prod.rating.count }}</span
+              >
+            </div>
+
+            <div
+              class="item-center font-bold text-slate-800 mt-1 flex items-center dark:text-black"
+            >
+              <span class="mr-1">{{ prod.rating.rate }}</span>
+
+              @for (star of getFullStars(prod.rating.rate); track star) {
+              <i class="fas fa-star text-yellow-400"></i>
+              } @if (getHasHalfStar(prod.rating.rate)) {
+              <i class="fas fa-star-half-alt text-yellow-400"></i>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="flex my-3 cursor-pointer"
+          [routerLink]="['/details', prod.id]"
+        >
+          <h3 class="font-bold text-black font-mono text-lg dark:text-black">
+            See more Details
+          </h3>
+          <span class="main-color font-bold font-mono text-2xl ms-1"
+            ><i class="fa-solid fa-arrow-right-long"></i
+          ></span>
+        </div>
+
+        <button
+          (click)="addToCart(prod.id)"
+          [disabled]="isAddLoading[prod.id]"
+          class="relative left-60 mt-2 main-color rounded-md w-9 h-9 text-3xl font-bold"
+        >
+          @if (!isAddLoading[prod.id]) {
+          <i class="fa-solid fa-cart-plus"></i>
+          } @else {
+          <i class="fas fa-spinner fa-spin"></i>
+          }
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<div
+  class="fixed right-2 bottom-5 w-10 h-10 cursor-pointer text-center text-3xl"
+>
+  <i
+    class="fa-solid cursor-pointer"
+    [class.fa-sun]="isDarkMode"
+    [class.fa-moon]="!isDarkMode"
+    [class.text-white]="isDarkMode"
+    (click)="toggleTheme()"
+  ></i>
+</div>
